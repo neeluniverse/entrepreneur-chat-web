@@ -24,7 +24,7 @@ model Post {
   id        String   @id @default(cuid())
   content   String
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments  Comment[]
   likes     Like[]
   createdAt DateTime @default(now())
@@ -35,8 +35,8 @@ model Comment {
   content   String
   postId    String
   userId    String
-  post      Post     @relation(fields: [postId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }
 
@@ -44,16 +44,20 @@ model Like {
   id        String   @id @default(cuid())
   postId    String
   userId    String
-  post      Post     @relation(fields: [postId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+
+  @@unique([postId, userId])
 }
 
 model Follow {
   id          String   @id @default(cuid())
   followerId  String
   followingId String
-  follower    User     @relation("follower", fields: [followerId], references: [id])
-  following   User     @relation("following", fields: [followingId], references: [id])
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
 }
