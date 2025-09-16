@@ -3,12 +3,13 @@ services:
     name: entrepreneur-chat-web
     env: node
     plan: free
-    buildCommand: cd backend && npm install && npx prisma generate
-    startCommand: cd backend && npm start
+    rootDirectory: backend  # Add this line
+    buildCommand: npm install && npx prisma generate
+    startCommand: npm start
     envVars:
       - key: DATABASE_URL
-        fromSecret: DATABASE_URL
+        value: postgresql://divineconnectionstreasure_user:UajTRixxqTCDtFdaBSD1xNrT222OeBnT@dpg-d33ba60dl3ps738nsr7g-a/divineconnectionstreasure
       - key: JWT_SECRET
-        fromSecret: JWT_SECRET
+        generateValue: true
       - key: NODE_ENV
         value: production
