@@ -1,1 +1,12 @@
-
+services:
+  - type: web
+    name: entrepreneur-chat-web
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://divineconnectionstreasure_user:UajTRixxqTCDtFdaBSD1xNrT222OeBnT@dpg-d33ba60dl3ps738nsr7g-a/divineconnectionstreasure
+      - key: JWT_SECRET
+        generateValue: true
