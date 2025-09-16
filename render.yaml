@@ -1,1 +1,26 @@
+services:
+  - type: web
+    name: entrepreneur-chat-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install && npx prisma generate && npm run prisma:migrate
+    startCommand: cd backend && node index.js
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: entrepreneur-chat-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
 
+  - type: web
+    name: entrepreneur-chat-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/build
+
+databases:
+  - name: entrepreneur-chat-db
+    plan: free
+    databaseName: entrepreneur_chat
+    user: entrepreneur_user
