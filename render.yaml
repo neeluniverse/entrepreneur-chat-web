@@ -3,7 +3,6 @@ services:
     name: entrepreneur-chat-web
     env: node
     plan: free
-    rootDirectory: backend  # Add this line
     buildCommand: npm install && npx prisma generate
     startCommand: npm start
     envVars:
